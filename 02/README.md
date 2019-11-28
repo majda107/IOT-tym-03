@@ -30,3 +30,10 @@ while True: // nekonecna smycka
 </code>
 
 - Můžete si povšimnout funkce `sleep(0.01)` na konci smyčky, to je zde kvůli tzv. *debounce* tlačítka, to je situace kdy se spoj fyzicky chvěje...
+
+### Schema zapojení
+
+- Konečné schema zapojení na které funguje náš testovací zdrojový kod
+
+![Schema zapojení obvodu](ukol2.png)
+
