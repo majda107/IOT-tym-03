@@ -1,5 +1,5 @@
 # NAG-IoT
-## -Jméno týmu-
+## Návrat
 
 Příklad, jak má vypadat repozitář pro odevzdání úloh.
 
