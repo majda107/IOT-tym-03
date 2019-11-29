@@ -8,8 +8,8 @@ Zde vyplnit které úkoly jsou splněny:
 
 | Úloha | Splněno |
 |-------|---------|
-| 1. | NE |
-| 2. | NE |
+| 1. | ANO |
+| 2. | ANO |
 | 3. | NE |
 | 4. | NE |
 | 5. | NE |
