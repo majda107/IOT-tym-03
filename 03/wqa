@@ -1,0 +1,10 @@
+# NAG-IoT
+## Návrat
+
+1. Připojení snímače
+
+2. Použité knihovny - sprovoznění I2C sběrnice
+	- Na sprovoznění BH1750 snímače, jenž má sběrnici I2C jsmě použili knihovnu smbus, který lze inicializovat příkazem `bus = smbus.SMBus(1)` a následně číst data příkazem `bus.read_i2c_block_data(addr, 0x20)`, kde `addr` je adresa snímače (v našem případě 0x23). 
+
+3. Změna svitu diody
+	- Další věc, co jsme potřebovali rozchodit, je změna svitu diody, toho lze dosáhnout přes PWM. PWM lze inicializovat příkazem `GPIO.PWM(36, 100)`.
