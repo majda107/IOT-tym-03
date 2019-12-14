@@ -12,4 +12,8 @@
 4. Sjednocení snímače a regulace svitu diody
 	- Poslední, co nám zbývá je tyto dvě funční části programu spojit. Logika je velmi jednoduchá, stačí udělat nekonečnou `while True` smyčku, jenž bude kontrolovat hodnotu ze snímače a pokud hodnota menší jak nějaká hraniční konstanta (v našem kódu `LUX_CAP`) tak nastavíme PWM na diodě ve zbývajícím rozmezí.
 
--- přidat schema
+### Schema zapojení
+
+- Konečné schema zapojení na které funguje náš testovací zdrojový kod
+
+![Schema zapojení obvodu](ukol3.png)
