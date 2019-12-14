@@ -8,3 +8,10 @@
 	- Logika obvodu s tlačítkem nebude moc složitá, stačí opět udělat nekonečnou `while: True` smyčku s nějakým debouncem (`time.sleep(0.05)`) kde se nastaví úhel serva na 0 stupňů. Zároveň kontrolujeme na stisk tlačítka, pokud je tlačítko stisknuto stačí závoru otevřít (nastavit úhel serva na 90 stupňů) a zmrazit program na 10 sekund.
 
 -- přidat kód
+
+
+### Schema zapojení
+
+- Konečné schema zapojení na které funguje náš testovací zdrojový kod
+
+![Schema zapojení obvodu](úkol5.png)
