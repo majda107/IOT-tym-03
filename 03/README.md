@@ -16,4 +16,4 @@
 
 - Konečné schema zapojení na které funguje náš testovací zdrojový kod
 
-![Schema zapojení obvodu](úkol3.png)
+![Schema zapojení obvodu](úkol3.png =250x)
