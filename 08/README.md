@@ -8,7 +8,7 @@
     - Data z PIR senzoru se dají přečíst stejným způsobem jako z tlačítka, stačí tedy nastavit GPIO pin na vstup pomocí `GPIO.setup(pin, GPIO.IN)` a poté přečíst data z pomocí `GPIO.input(pin)`.
 
 3. Logika kódu 
-    --
+    - Jelikož se PIRko chová (z hlediska programu) jako klasické tlačítko a na bzučák lze nastavit akorát logickou hodnotu HIGH, není logika programu příliž složitá. Stačí pouze v nekonečné smyčče kontrolovat hodnotu na senzoru, když se sensor zaktivuje, zapneme bzučák, diodu a počkáme asi 0.5s, aby se eliminovali divné zvuky z bzučáku.
 
 -- diagram
 
