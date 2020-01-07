@@ -21,6 +21,9 @@
 
     - Nad instancí `draw` už lze volat klasické metody, které nám vykreslí tvary / text jako `.rectangle` nebo `.text`, grafiku poté vykreslíme z bufferu na displej pomocí `disp.image(image)` a `disp.display()`. Před tímto vším doporučuji celý displej vyčistit tím, že přes vše překreslíme černý obdelník `  draw.rectangle((0, 0,disp.width, disp.height), outline=0, fill=0)`. 
 
+5. Struktura programu
+    - Na začátku programu inicializujeme všechny potřebné instance, tím pádem zajistíme, že je vše potřebné připravené. Dále je dobré udělat si funkci co celý displej vyčistí (`clear()`) a vykreslí buffer (`invalidate()`). Poté stačí ve smyčce zavolat tyto funkce, je dobré přidat nějaký delay (v podobě `time.sleep()`) aby se zamezilo případnému blikaní a dalším nežádoucím artefaktům. Mezi funkcemi clear a invalidate můžeme nyní kreslit libovolné věci na buffer a ty by se měli po funkcni invalidate vykreslit.
+
 
 -- diagram
 
