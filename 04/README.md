@@ -9,5 +9,3 @@
 
 3. Nahookování na logiku programu
 	- Nahookování našeho vlastního klienta na logiku programu je velice snadné, stačí volat metodu na nastavení osvětlení v proměnné na soutěžním serveru pomocí naší metody `set_luminosity(value)`
-
--- přidání kódu
