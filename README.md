@@ -12,7 +12,7 @@ Zde vyplnit které úkoly jsou splněny:
 | 2. | ANO |
 | 3. | ANO |
 | 4. | ANO |
-| 5. | NE |
+| 5. | ANO |
 | 6. | NE |
 | 7. | NE |
 | 8. | NE |
