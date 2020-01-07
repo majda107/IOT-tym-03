@@ -1,5 +1,5 @@
 # NAG-IoT
-## -Jméno týmu-
+## -Návrat-
 
-Zde napiště postup při řešení úkolu dle zadání <br />
-Včetně zdojů, použitých knihoven.
+Tuto soutěž jsme pojali ve velkém a děláme plnohodnotně funkční model domu ze dřeva.
+Model je momentálně v rozpracovaném stavu kdy máme dům vymodelovaný, zdi vyfrézovány a slepeny. <br />
