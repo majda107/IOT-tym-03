@@ -14,7 +14,7 @@ Zde vyplnit které úkoly jsou splněny:
 | 4. | ANO |
 | 5. | ANO |
 | 6. | ANO |
-| 7. | NE |
+| 7. | ANO |
 | 8. | NE |
 | 9. | NE |
 | 10. | NE |

@@ -14,6 +14,9 @@
 
     - Vracet data ze čtečky také není složité, stačí nad instancí zavolat `.read()` metodu a tím vrátíme data ze čtečky.
 
+4. Logika programu
+    - Otvírat závoru lze stejným způsobem, jako na stisk tlačítka a tak vypadá i naše dočasné řešení. Časem však bude lepší závoru udělat jako ovladatelný podprogram, nad kterým pouze zavoláme funkcni na otevření z venčí (aby se dala kombinovat různé řešení jednoduše).
+
 -- přidat diagram
 
 zdroje:
