@@ -13,5 +13,4 @@
 
 	- Zbytek logiky řešíme tak, že uděláme nekonečnou `while: True` smyčku s malým sleepem, a velmi často kontrolujeme zda jsou oba senzory zavřené + je delta času (momentální čas - poslední čas) větší jak určitý časový rozdíl `if shouldCloseSensor == True and shouldCloseButton and (datetime.now() - lastTimeChecked).seconds > 2:` (v této situaci 2 sekundy), pokud ano, závoru zavřeme. 
 
--- přidat kód
 -- přidat zapojení
