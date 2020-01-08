@@ -5,3 +5,5 @@ Tuto soutěž jsme pojali ve velkém a děláme plnohodnotně funkční model do
 Model je momentálně v rozpracovaném stavu kdy máme dům vymodelovaný, zdi vyfrézovány a slepeny. <br />
 
 -- fotky
+
+![Prvotni navrh modelu]( navrh.jpg)
