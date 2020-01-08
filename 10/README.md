@@ -6,4 +6,4 @@ Model je momentálně v rozpracovaném stavu kdy máme dům vymodelovaný, zdi v
 
 -- fotky
 
-![Prvotni navrh modelu]( navrh.jpg)
+![Prvotni navrh modelu]( navrh.jpg){:height="700px" width="400px"}
