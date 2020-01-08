@@ -14,3 +14,4 @@
 
 zdroje:
 - https://maker.pro/raspberry-pi/tutorial/how-to-interface-a-pir-motion-sensor-with-raspberry-pi-gpio
+- https://www.hackster.io/hardikrathod/pir-motion-sensor-with-raspberry-pi-415c04
