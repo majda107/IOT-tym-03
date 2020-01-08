@@ -18,9 +18,9 @@ Zde vyplnit které úkoly jsou splněny:
 | 8. | ANO |
 | 9. | ANO |
 | 10. | ANO |
-| 11. | NE |
-| 12. | NE |
+| 11. | ANO |
+| 12. | ANO |
 
 Video týmu je na adrese: <br />
-https://www.youtube.com/watch?v=iWtRl39DOC8
+https://youtu.be/NWiC1ivnzKY
 
