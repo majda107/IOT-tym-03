@@ -4,7 +4,7 @@
 const char *ssid = "buzka";
 const char *password = "jedominantni";
 
-WebSocketClient ws(true);
+WebSocketClient ws(false);
 
 void setup() {
   Serial.begin(115200);
