@@ -81,7 +81,7 @@ namespace WebSocketServer.Connection
 
                 received = WebSocketHandler.HandleMessage(state.Buffer);
                 this.Server?.EmitMessageReceived(this, received);
-                //System.Console.WriteLine($"> Received data: {received}");
+                System.Console.WriteLine($"> Received data: {received}");
             }
 
             state.Client.BeginReceive(state.Buffer, 0, SocketState.DEFAULT_BUFFER_SIZE, SocketFlags.None, new AsyncCallback(ReceiveCallback), state);

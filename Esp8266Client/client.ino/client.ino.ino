@@ -6,6 +6,8 @@ const char *password = "jedominantni";
 
 WebSocketClient ws(false);
 
+bool connecting;
+
 void setup() {
   Serial.begin(115200);
   Serial.println();
@@ -27,19 +29,22 @@ void setup() {
 
   Serial.println(F("[CONNECTED]"));   Serial.print("[IP ");  Serial.print(WiFi.localIP()); 
   Serial.println("]");
+
+   Serial.println("Connecting to WS server...");
+   bool status = ws.connect("192.168.43.169", "/", 5050);
+   if(status) {
+    Serial.println("connected!");
+   }
+   else
+   {
+    Serial.println("couldn't connect...");
+   }
 }
 
 void loop() {
 
-  if(!ws.isConnected())
-  {
-    ws.connect("192.168.43.169", "/", 5050);
-    Serial.println("Connected to WS server!");
-  }
-  else
-  {
-    ws.send("lmao");
-  }
+  ws.send("lmao ok");
+  Serial.println("Sending...");
   
-  delay(500);
+  delay(5000);
 }
