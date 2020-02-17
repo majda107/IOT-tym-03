@@ -7,9 +7,17 @@ namespace WebSocketServer.Connection.WebSocket
 {
     public static class WebSocketHandler
     {
+        public static bool DEBUG = true;
         public static void HandleHandshake(string received, SocketClient socket)
         {
+            if(DEBUG) 
+                Console.WriteLine($"Handshake data: {received}");
+
             string swk = Regex.Match(received, "Sec-WebSocket-Key: (.*)").Groups[1].Value.Trim();
+
+            if(DEBUG)
+                Console.WriteLine($"Received client key: {swk}");
+
             string swka = swk + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
             byte[] swkaSha1 = System.Security.Cryptography.SHA1.Create()
                 .ComputeHash(Encoding.UTF8.GetBytes(swka));
@@ -21,9 +29,12 @@ namespace WebSocketServer.Connection.WebSocket
                 "Upgrade: websocket\r\n" +
                 "Sec-WebSocket-Accept: " + swkaSha1Base64 + "\r\n\r\n");
 
+            if(DEBUG)
+                Console.WriteLine($"Sending handshake hash: {swkaSha1Base64}");
+
             socket.Send(response);
         }
-        public static string HandleMessage(byte[] buffer)
+        public static string HandleMessage(byte[] buffer, int read)
         {   
             bool mask = (buffer[1] & 0b10000000) != 0;
             int msglen = buffer[1] - 128;
@@ -41,6 +52,11 @@ namespace WebSocketServer.Connection.WebSocket
                 byte[] masks = new byte[4]
                     {buffer[offset], buffer[offset + 1], buffer[offset + 2], buffer[offset + 3]};
                 offset += 4;
+
+                if(offset + msglen > read) 
+                {
+                    return null;
+                }
                 
                 for (int i = 0; i < msglen; ++i)
                     decoded[i] = (byte) (buffer[offset + i] ^ masks[i % 4]);
@@ -48,7 +64,8 @@ namespace WebSocketServer.Connection.WebSocket
                 return Encoding.UTF8.GetString(decoded);
             }
             
-            return String.Empty;
+            //return String.Empty;
+            return null;
         }
 
         public static bool IsCancelFrame(byte[] buffer, int bytesRead)

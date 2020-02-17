@@ -10,16 +10,19 @@ namespace WebSocketServer.Connection
     {
         public Socket Socket { get; private set; }
         public SocketListener Server { get; private set; }
+        public bool HandShake {get; private set;}
 
         public SocketClient(Socket socket)
         {
             this.Socket = socket;
+            this.HandShake = false;
         }
 
         public SocketClient(Socket socket, SocketListener server)
         {
             this.Socket = socket;
             this.Server = server;
+            this.HandShake = false;
         }
 
         public void Send(string message) 
@@ -56,6 +59,7 @@ namespace WebSocketServer.Connection
         {
             var state = (SocketState)ar.AsyncState;
 
+            
             int bytesRead = state.Client.EndReceive(ar);
             if (bytesRead <= 0)
             {
@@ -63,29 +67,47 @@ namespace WebSocketServer.Connection
                 return;
             }
 
+            state.Read += bytesRead;
 
-            var received = Encoding.UTF8.GetString(state.Buffer, 0, bytesRead);
-            if (Regex.IsMatch(received, "^GET", RegexOptions.IgnoreCase))
+            var received = Encoding.UTF8.GetString(state.Buffer, 0, state.Read);
+            Console.WriteLine($" ~ Receive callback! Bytes read: {bytesRead}, Available: {state.Client.Available}, Received: {received}");
+
+            // var received = Encoding.UTF8.GetString(state.Buffer, 0, bytesRead);
+            if (Regex.IsMatch(received, "^GET", RegexOptions.IgnoreCase) && received.Contains("Key"))
             {
                 System.Console.WriteLine("> Handshake started!");
                 WebSocketHandler.HandleHandshake(received, this);
+                this.HandShake = true;
+
+                Console.WriteLine("Clearing state...");
+                state.Clear();
+                bytesRead = 0;
             }
-            else
+            else if(this.HandShake)
             {
-                if (WebSocketHandler.IsCancelFrame(state.Buffer, bytesRead))
-                {
-                    Console.WriteLine("Client disconneted!");
-                    this.Server?.EmitDisconnected(this);
-                    return;
-                }
+                // if (WebSocketHandler.IsCancelFrame(state.Buffer, bytesRead))
+                // {
+                //     Console.WriteLine("Client disconneted!");
+                //     this.Server?.EmitDisconnected(this);
+                //     return;
+                // }
 
-                received = WebSocketHandler.HandleMessage(state.Buffer);
-                this.Server?.EmitMessageReceived(this, received);
-                System.Console.WriteLine($"> Received data: {received}");
+                received = WebSocketHandler.HandleMessage(state.Buffer, state.Read);
+
+                if(received != null)
+                {
+                    this.Server?.EmitMessageReceived(this, received);
+                    System.Console.WriteLine($"> Received data: {received}");
+    
+                    Console.WriteLine("Clearing state...");
+                    state.Clear();
+                    bytesRead = 0;    
+                }
+                
             }
 
-            state.Client.BeginReceive(state.Buffer, 0, SocketState.DEFAULT_BUFFER_SIZE, SocketFlags.None, new AsyncCallback(ReceiveCallback), state);
-            Array.Clear(state.Buffer, 0, state.Buffer.Length);
+            state.Client.BeginReceive(state.Buffer, bytesRead, SocketState.DEFAULT_BUFFER_SIZE - state.Read, SocketFlags.None, new AsyncCallback(ReceiveCallback), state);
+            // Array.Clear(state.Buffer, 0, state.Buffer.Length);
         }
     }
 }

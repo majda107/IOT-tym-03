@@ -9,11 +9,13 @@ namespace WebSocketServer.Connection
         public static int DEFAULT_BUFFER_SIZE = 512;
         public Socket Client { get; set; }
         public byte[] Buffer { get; set; }
+        public int Read { get; set;}
 
         public SocketState(Socket client)
         {
             this.Client = client;
             this.Buffer = new byte[SocketState.DEFAULT_BUFFER_SIZE];
+            this.Read = 0;
         }
 
         public SocketState(Socket client, byte[] buffer)
@@ -25,6 +27,12 @@ namespace WebSocketServer.Connection
         {
             this.Client = null;
             this.Buffer = new byte[SocketState.DEFAULT_BUFFER_SIZE];
+        }
+
+        public void Clear()
+        {
+            this.Buffer = new byte[SocketState.DEFAULT_BUFFER_SIZE];
+            this.Read = 0;
         }
     }
 }
