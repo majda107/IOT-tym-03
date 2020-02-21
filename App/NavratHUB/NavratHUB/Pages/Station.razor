@@ -1,0 +1,40 @@
+@page "/station"
+@using NavratHUB.Data.Station
+@inject StationStorage storage
+
+<h2>STORAGE TEST</h2>
+
+<ul>
+@foreach (var pair in this.data)
+{
+    <li>@pair.Key 
+        <ul>
+        @foreach (var entry in pair.Value)
+        {
+            <li>@entry</li>
+        }
+        </ul>
+    </li>
+}
+</ul>
+
+@code {
+
+    private Dictionary<string, List<string>> data;
+    protected override void OnInitialized() {
+
+        this.data = this.storage.Storage;
+
+        this.storage.DataReceived += async (o, e) => {
+            Console.WriteLine($"Data changed! : {e.Data}");
+
+            this.data = this.storage.Storage;
+
+            await this.InvokeAsync(() => {
+                Console.WriteLine("Invoked!");
+                @* this.StateHasChanged(); *@
+                Task.Run(this.StateHasChanged);
+            });
+        };
+    }
+}

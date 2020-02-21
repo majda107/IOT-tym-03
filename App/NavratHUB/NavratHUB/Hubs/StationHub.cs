@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using NavratHUB.Data.Station;
+using System;
 
 namespace NavratHUB.Hubs
 {
@@ -11,8 +12,10 @@ namespace NavratHUB.Hubs
         {
             this._storage = storage;
         }
-        public async Task SendData(string sensor, string data)
+
+        public void SendData(string sensor, string data)
         {
+            // Console.WriteLine($"~ RECEIVED DATA! | {sensor} | {data}");
             _storage.Add(sensor, data);
         }     
     }
