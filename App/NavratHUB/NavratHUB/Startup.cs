@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NavratHUB.Data;
+using NavratHUB.Data.Station;
+using NavratHUB.Hubs;
 
 namespace NavratHUB
 {
@@ -29,6 +31,8 @@ namespace NavratHUB
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<StationStorage>();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +56,8 @@ namespace NavratHUB
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapBlazorHub();
+                // endpoints.MapBlazorHub();
+                endpoints.MapHub<StationHub>("/stationhub");
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
