@@ -85,12 +85,12 @@ namespace WebSocketServer.Connection
             }
             else if(this.HandShake)
             {
-                // if (WebSocketHandler.IsCancelFrame(state.Buffer, bytesRead))
-                // {
-                //     Console.WriteLine("Client disconneted!");
-                //     this.Server?.EmitDisconnected(this);
-                //     return;
-                // }
+                if (WebSocketHandler.IsCancelFrame(state.Buffer, state.Read))
+                {
+                    Console.WriteLine("Client disconneted!");
+                    this.Server?.EmitDisconnected(this);
+                    return;
+                }
 
                 received = WebSocketHandler.HandleMessage(state.Buffer, state.Read);
 
@@ -98,7 +98,7 @@ namespace WebSocketServer.Connection
                 {
                     this.Server?.EmitMessageReceived(this, received);
                     System.Console.WriteLine($"> Received data: {received}");
-    
+
                     Console.WriteLine("Clearing state...");
                     state.Clear();
                     bytesRead = 0;    

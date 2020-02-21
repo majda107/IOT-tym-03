@@ -7,6 +7,7 @@ namespace WebSocketServer.Connection.WebSocket
 {
     public static class WebSocketHandler
     {
+        public static byte WS_FIN = 0x80;
         public static bool DEBUG = true;
         public static void HandleHandshake(string received, SocketClient socket)
         {
@@ -73,8 +74,11 @@ namespace WebSocketServer.Connection.WebSocket
             if(bytesRead > 8 || buffer.Length < 0) 
                 return false;
 
-            if(buffer[0] > 128 && buffer[0] <= 143  ) 
+            if((buffer[0] | WS_FIN) == 0x08)
                 return true;
+
+            // if(buffer[0] > 128 && buffer[0] <= 143  ) 
+            //     return true;
 
 
             return false;
