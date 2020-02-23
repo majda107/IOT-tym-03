@@ -1,1 +1,2 @@
 https://github.com/markruys/arduino-DHT
+https://github.com/claws/BH1750

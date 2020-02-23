@@ -37,7 +37,7 @@ char host[] = "192.168.43.169";
 
 
 
-void init() {
+void init_vars() {
   // Init console
   Serial.begin(115200);
   Serial.println("Serial started at 115200");
@@ -124,7 +124,7 @@ void send_data() {
 
 
 void setup() {
-  init();
+  init_vars();
   connect_wifi();
   connect_ws();
 }
