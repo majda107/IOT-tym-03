@@ -69,21 +69,11 @@ namespace SharpSocket.Connection
 
             state.Read += bytesRead;
 
-            var received = Encoding.UTF8.GetString(state.Buffer, 0, state.Read);
-            Console.WriteLine($" ~ Receive callback! Bytes read: {bytesRead}, Available: {state.Client.Available}, Received: {received}");
+            string received = null;
+            Console.WriteLine($" ~ Receive callback! Bytes read: {bytesRead}, Available: {state.Client.Available}");
 
             // var received = Encoding.UTF8.GetString(state.Buffer, 0, bytesRead);
-            if (Regex.IsMatch(received, "^GET", RegexOptions.IgnoreCase) && received.Contains("Key"))
-            {
-                System.Console.WriteLine("> Handshake started!");
-                WebSocketHandler.HandleHandshake(received, this);
-                this.HandShake = true;
-
-                Console.WriteLine("Clearing state...");
-                state.Clear();
-                bytesRead = 0;
-            }
-            else if(this.HandShake)
+            if(this.HandShake)
             {
                 if (WebSocketHandler.IsCancelFrame(state.Buffer, state.Read))
                 {
@@ -92,22 +82,37 @@ namespace SharpSocket.Connection
                     return;
                 }
 
-                received = WebSocketHandler.HandleMessage(state.Buffer, state.Read);
-
-                if(received != null)
+                var messages = WebSocketHandler.HandlePacket(state.Buffer, state.Read);
+                foreach(var message in messages)
                 {
-                    this.Server?.EmitMessageReceived(this, received);
-                    System.Console.WriteLine($"> Received data: {received}");
+                    this.Server?.EmitMessageReceived(this, message);
+                    System.Console.WriteLine($"> Received data: {message}");
+                }
 
+                if(messages.Count > 0)
+                {
                     Console.WriteLine("Clearing state...");
                     state.Clear();
                     bytesRead = 0;    
                 }
-                
+            }
+            else
+            {
+                received = Encoding.UTF8.GetString(state.Buffer, 0, state.Read);
+                if (Regex.IsMatch(received, "^GET", RegexOptions.IgnoreCase) && received.Contains("Key"))
+                {
+                    System.Console.WriteLine("> Handshake started!");
+                    WebSocketHandler.HandleHandshake(received, this);
+                    this.HandShake = true;
+
+                    Console.WriteLine("Clearing state...");
+                    state.Clear();
+                    bytesRead = 0;
+            
+                }
             }
 
             state.Client.BeginReceive(state.Buffer, bytesRead, SocketState.DEFAULT_BUFFER_SIZE - state.Read, SocketFlags.None, new AsyncCallback(ReceiveCallback), state);
-            // Array.Clear(state.Buffer, 0, state.Buffer.Length);
         }
     }
 }
