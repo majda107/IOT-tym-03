@@ -13,7 +13,7 @@ namespace SignalrClient
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, ssl) => true;
 
             Console.WriteLine("Connecting to hub...");
-            var connection = new HubConnectionBuilder().WithUrl("http://127.0.0.1:5000/stationhub").Build();
+            var connection = new HubConnectionBuilder().WithUrl("http://127.0.0.1:5000/stationhub").WithAutomaticReconnect().Build();
 
             connection.Closed += async (error) => {
                 Console.WriteLine($"Connection closed due to the: {error.ToString()}... retrying in 2 seconds");
@@ -21,7 +21,14 @@ namespace SignalrClient
                 await connection.StartAsync();
             };
 
-            await connection.StartAsync();
+            try 
+            {
+                await connection.StartAsync();
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine("Couldn't connect due to the: " + e.ToString());
+            }
 
             Console.WriteLine("Conneceted!");
 

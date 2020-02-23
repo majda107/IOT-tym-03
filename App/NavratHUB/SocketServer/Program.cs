@@ -1,6 +1,8 @@
 ﻿using System;
 using SharpSocket.Connection;
 using System.Net;
+using Microsoft.AspNetCore.SignalR.Client;
+using System.Threading.Tasks;
 
 namespace SocketServer
 {
@@ -8,12 +10,17 @@ namespace SocketServer
     {
         static void Main(string[] args)
         {
-            var address = IPAddress.Parse("127.0.0.1");
-            var port = 5050;
+            var server = new Server(IPAddress.Parse("192.168.75.190"), 5050, "http://127.0.0.1:5000/stationhub");
+            server.Connect();
 
-            var listener = new SocketListener(address, port);
-            listener.Start();
-            Console.WriteLine("Hello World!");
+            Console.Write("Server running... type anything to send as test data, [exit] to stop the server...: ");
+            var line = Console.ReadLine();
+            while(line.ToLower() != "exit")
+            {
+                Task.Run(() => server.RespondAsync("manual", line));
+                Console.WriteLine("...");
+                line = Console.ReadLine();
+            }
         }
     }
 }
