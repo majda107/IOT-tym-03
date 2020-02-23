@@ -12,14 +12,14 @@ WiFiClient client;
 
 
 // WIFI SSID
-const char *ssid = "buzka";
+const char *ssid = ":ERROR 404:";
 // WIFI PASSWORD
-const char *password = "jedominantni";
+const char *password = "majda123";
 
 char path[] = "/";
 
 // SERVER IP
-char host[] = "192.168.43.169";
+char host[] = "192.168.75.190";
 
 // ====
 // END CONFIG
@@ -93,11 +93,14 @@ void send_data() {
   float f_voltage = voltage * 0.00615615615;
   webSocketClient.sendData("voltage;" + String(f_voltage, 6));
 
+  
   //measure temp and humidity
   float humidity = random(50, 90);
   float temperature = random(27000, 36000) / (float)1000;
-  
+
+  //delay(100);
   webSocketClient.sendData("humidity;" + String(humidity, 6));
+  //delay(100);
   webSocketClient.sendData("temperature;" + String(temperature, 6));
 }
 
@@ -115,11 +118,13 @@ void loop() {
     //webSocketClient.sendData("test lol: " + String(random(0, 100)));
     send_data();
     Serial.println("Data sent... sleeping for 10s");
-    ESP.deepSleep(10000000);
+    //ESP.deepSleep(10000000);
+    delay(10000);
   }
   else
   {
     Serial.println("Client not connected... retrying in 5s");
-    ESP.deepSleep(5000000);
+    //ESP.deepSleep(5000000);
+    delay(5000);
   }
 }

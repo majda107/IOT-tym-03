@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace WebSocketServer.Connection.WebSocket
 {
@@ -35,15 +36,28 @@ namespace WebSocketServer.Connection.WebSocket
 
             socket.Send(response);
         }
-        public static string HandleMessage(byte[] buffer, int read)
-        {   
-            bool mask = (buffer[1] & 0b10000000) != 0;
-            int msglen = buffer[1] - 128;
+
+        public static IList<string> HandlePacket(byte[] buffer, int read)
+        {
+            var messages = new List<string>();
+            int extracted = 0;
+            while(extracted < buffer.Length)
+            {
+                extracted += ExtractMessage(buffer, read, extracted, messages);
+            }
+
+            return messages;
+        }
+
+        private static int ExtractMessage(byte[] buffer, int read, int seek, IList<string> messages)
+        {
+            bool mask = (buffer[seek + 1] & 0b10000000) != 0;
+            int msglen = buffer[seek + 1] - 128;
             int offset = 2;
             
             if (msglen == 126)
             {   
-                msglen = BitConverter.ToUInt16(new byte[] {buffer[3], buffer[2]}, 0);
+                msglen = BitConverter.ToUInt16(new byte[] {buffer[seek + 3], buffer[seek + 2]}, 0);
                 offset = 4;
             }
             
@@ -51,22 +65,26 @@ namespace WebSocketServer.Connection.WebSocket
             {   
                 byte[] decoded = new byte[msglen];
                 byte[] masks = new byte[4]
-                    {buffer[offset], buffer[offset + 1], buffer[offset + 2], buffer[offset + 3]};
+                    {buffer[offset + seek], buffer[offset + seek + 1], buffer[offset + seek + 2], buffer[offset + seek + 3]};
                 offset += 4;
 
-                if(offset + msglen > read) 
+                if(offset + msglen > read || msglen <= 0) 
                 {
-                    return null;
+                    return buffer.Length;
                 }
                 
                 for (int i = 0; i < msglen; ++i)
-                    decoded[i] = (byte) (buffer[offset + i] ^ masks[i % 4]);
+                    decoded[i] = (byte) (buffer[offset + seek + i] ^ masks[i % 4]);
                 
-                return Encoding.UTF8.GetString(decoded);
+                messages.Add(Encoding.UTF8.GetString(decoded));
+            }
+            else
+            {
+                return buffer.Length;
             }
             
             //return String.Empty;
-            return null;
+            return offset + msglen;
         }
 
         public static bool IsCancelFrame(byte[] buffer, int bytesRead)
