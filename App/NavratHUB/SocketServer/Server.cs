@@ -48,7 +48,7 @@ namespace SocketServer
 
         private void HandleSocketData(object sender, SharpSocket.Connection.Event.SocketMessageEventArgs e)
         {
-            var split = e.Message.Split();
+            var split = e.Message.Split(";");
             if(split.Length == 2)
                 Task.Run(() => this.RespondAsync(split[0], split[1])); // RUN AND FORGET
             else
