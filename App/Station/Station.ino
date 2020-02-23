@@ -43,12 +43,14 @@ void init() {
   Serial.println("Serial started at 115200");
   
   // init lightmeter
-  Wire.begin(D3, D2);
+  //Wire.begin(D3, D2);
+  Wire.begin(3, 2);
   lightMeter.begin();
   Serial.println(F("BH1750 Test"));
   
   // init temp and humidity sensors
-  dht.setup(D1);
+  //dht.setup(D1);
+  dht.setup(1);
 }
 
 void connect_wifi() {
@@ -102,13 +104,13 @@ void connect_ws() {
 void send_data() {
   // measure light
   float lux = lightMeter.readLightLevel();
-  webSocketClient.sendData("light;" + lux);
+  webSocketClient.sendData("light;" + String(lux, 6));
   
   // measure battery voltage
   int voltage = analogRead(A0);
   delay(100);
   float f_voltage = voltage * 0.00615615615;
-  webSocketClient.sendData("voltage;" + f_voltage);
+  webSocketClient.sendData("voltage;" + String(f_voltage, 6));
 
   //measure temp and humidity
   delay(dht.getMinimumSamplingPeriod()); /* Delay of amount equal to sampling period */
@@ -116,15 +118,15 @@ void send_data() {
   float temperature = dht.getTemperature();/* Get temperature value */
   Serial.println(dht.getStatusString());/* Print status of communication */
 
-  webSocketClient.sendData("humidity;" + humidity);
-  webSocketClient.sendData("temperature;" + temperature);
+  webSocketClient.sendData("humidity;" + String(humidity, 6));
+  webSocketClient.sendData("temperature;" + String(temperature, 6));
 }
 
 
 void setup() {
-  init()
-  connect_wifi()
-  connect_ws()
+  init();
+  connect_wifi();
+  connect_ws();
 }
 
 
@@ -132,7 +134,7 @@ void setup() {
 void loop() {
   if (client.connected()) {  
     //webSocketClient.sendData("test lol: " + String(random(0, 100)));
-    send_data()
+    send_data();
     Serial.println("Data sent... sleeping for 10s");
     ESP.deepSleep(10000000);
   }
