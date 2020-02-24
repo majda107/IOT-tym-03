@@ -1,0 +1,17 @@
+@page "/station"
+@using NavratHUB.Data.Storage
+@inject Storage storage
+
+<h1>Weather station</h1>
+<Temperature Temp=this.storage.Station.Temperature></Temperature>
+
+@code {
+    protected override void OnInitialized()
+    {
+        this.storage.DataReceived += async (o, e) => {
+            await this.InvokeAsync(() => {
+                this.StateHasChanged();
+            });
+        };
+    }
+}

@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using NavratHUB.Data.Station;
+using NavratHUB.Data.Storage;
 using System;
 
 namespace NavratHUB.Hubs
 {
     public class StationHub : Hub
     {
-        private readonly StationStorage _storage;
-        public StationHub(StationStorage storage)
+        private readonly Storage _storage;
+        public StationHub(Storage storage)
         {
             this._storage = storage;
         }

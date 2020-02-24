@@ -1,11 +1,11 @@
-@page "/station"
-@using NavratHUB.Data.Station
-@inject StationStorage storage
+@page "/storage"
+@using NavratHUB.Data.Storage
+@inject Storage storage
 
 <h2>STORAGE TEST</h2>
 
 <ul>
-@foreach (var pair in this.storage.Storage)
+@foreach (var pair in this.storage.Data)
 {
     <li>@pair.Key 
         <ul>
