@@ -1,6 +1,8 @@
 @inherits StationComponentBase
 
 <div class="temperature">
-    <h2>Temperature bar component</h2>
-    <span>Value: @this.Value</span>
+    <h2 class="temperature-town">Hradec Králové</h2>
+    <span class="temperature-label">Temperature</span>
+    <span class="temperature-celsius">@(this.Value)°</span>
+    <span class="temperature-fahrenheit">@(this.Value*1.8f + 32f)° F</span>
 </div>

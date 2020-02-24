@@ -1,0 +1,42 @@
+@import '../abstracts/variables'
+
+.stripe
+    width: 100%
+    display: inline-grid
+    grid-template-columns: 100px 1fr auto 
+    grid-template-areas: 'icon . text'
+    grid-template-rows: 100px
+    align-items: center
+
+    &-icon
+        filter: invert(90%)
+        grid-area: icon
+        width: 80px
+        height: 80px
+        background-size: contain
+        background-position: center center
+        background-repeat: norepeat
+
+    &-text
+        grid-area: text
+
+        &-label
+            color: $text-darken
+            font-size: 2rem
+            opacity: 0.6
+            font-weight: 700
+
+        &-value
+            color: $text-highlight
+            font-size: 2.4rem
+            font-weight: 700
+            padding-left: 14px
+
+#voltage
+    background-image: url('../../images/icons/panel.svg')
+    
+#light
+    background-image: url('../../images/icons/sun.svg')
+
+#humidity
+    background-image: url('../../images/icons/humidity.svg')

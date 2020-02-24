@@ -1,4 +1,9 @@
 @inherits StationComponentBase
 
-<h2>Voltage</h2>
-<span>Value: @this.Value V</span>
+<div class="stripe">
+    <div class="stripe-icon" id="voltage"></div>
+    <span class="stripe-text">
+        <span class="stripe-text-label">Voltage:</span>
+        <span class="stripe-text-value">@(this.Value)V</span>
+    </span>
+</div>
