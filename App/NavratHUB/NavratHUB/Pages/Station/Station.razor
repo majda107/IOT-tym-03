@@ -3,8 +3,10 @@
 @inject Storage storage
 
 <h1>Weather station</h1>
+<Light Value=this.storage.Station.Humidity></Light>
 <Temperature Value=this.storage.Station.Temperature></Temperature>
 <Humidity Value=this.storage.Station.Humidity></Humidity>
+<Voltage Value=this.storage.Station.Voltage></Voltage>
 
 @code {
     protected override void OnInitialized()
