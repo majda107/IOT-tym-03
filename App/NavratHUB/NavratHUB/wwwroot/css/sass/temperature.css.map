@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,AAAC,CACT,gBAAgB,CAAE,GAAG,CAAG",
+    "sources": [
+        "../../../Sass/layout/temperature.sass"
+    ],
+    "names": [],
+    "file": "temperature.css"
+}
