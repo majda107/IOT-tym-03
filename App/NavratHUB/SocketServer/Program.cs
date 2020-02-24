@@ -17,7 +17,7 @@ namespace SocketServer
             var line = Console.ReadLine();
             while(line.ToLower() != "exit")
             {
-                Task.Run(() => server.RespondAsync("manual", line));
+                Task.Run(() => server.RespondAsync("temperature", line));
                 Console.WriteLine("...");
                 line = Console.ReadLine();
             }
