@@ -1,0 +1,39 @@
+@page "/iot"
+
+@using System.Collections.Generic
+@using NavratHUB.Data.Connection
+@using NavratHUB.Data.ViewModels
+
+@inject IotClient iotClient
+
+<EditForm OnValidSubmit="HandleNewVariable" Model="@this.variable">
+    <InputText @bind-Value="this.variable.Name" />
+    <button type="submit">Submit</button>
+</EditForm>
+
+<button @onclick="GetVariables">Get variables</button>
+    
+@if(this.variables != null)
+{
+    <ul>
+    @foreach(var value in this.variables)
+    {
+        <li>@value.Name</li>
+    }
+    </ul>
+}
+
+@code {
+    private VariableViewModel variable = new VariableViewModel();
+    private IEnumerable<VariableViewModel> variables;
+
+    public async Task HandleNewVariable()
+    {
+        await this.iotClient.CreateVariable(this.variable);
+    }
+
+    public async Task GetVariables()
+    {
+        this.variables = await this.iotClient.GetVariables();
+    }
+}

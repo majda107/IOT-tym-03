@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NavratHUB.Data;
+using NavratHUB.Data.Connection;
 using NavratHUB.Data.Storage;
 using NavratHUB.Hubs;
 
@@ -31,7 +32,10 @@ namespace NavratHUB
             services.AddSignalR();
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddHttpClient<IotClient>();
             services.AddSingleton<WeatherForecastService>();
+            // services.AddSingleton<IotClient>();
             services.AddSingleton<Storage>();
         }
 

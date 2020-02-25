@@ -18,7 +18,7 @@ class NAGApi:
     @staticmethod
     def set_luminosity(data):
         response = requests.put('https://api.nag-iot.zcu.cz/v2/variable/luminosity', headers = NAGApi.Headers, data = json.dumps(data))
-        #print(reponse.status_code)
+        print(json.dumps(data))
         return response.status_code
 
     @staticmethod
@@ -29,5 +29,9 @@ class NAGApi:
 
 if __name__ == "__main__":
     NAGApi.set_luminosity_value(20)
+    response = requests.get("https://api.nag-iot.zcu.cz/v2/variable/luminosity", headers = NAGApi.Headers)
+    print(response.json())
+    print('setting to 10.0f')
+    NAGApi.set_luminosity_value(10)
     response = requests.get("https://api.nag-iot.zcu.cz/v2/variable/luminosity", headers = NAGApi.Headers)
     print(response.json())
