@@ -67,12 +67,14 @@ namespace NavratHUB.Data.Connection
         public async Task<bool> HandleData(string name, float value)
         {
             var data = await this.GetVariable(name);
-            data.Value = value;
 
-            if(data == null) 
-                return await this.CreateVariable(new VariableViewModel() { Name = name, Value = value });
-            else
+            if(data != null)
+            {
+                data.Value = value;
                 return await this.SetVariable(data);
+            }
+            else 
+                return await this.CreateVariable(new VariableViewModel() { Name = name, Value = value });
         }
     }
 }

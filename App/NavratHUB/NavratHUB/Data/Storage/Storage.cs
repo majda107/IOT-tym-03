@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using NavratHUB.Data.Storage.Station;
 using NavratHUB.Data.Connection;
+using System.Threading.Tasks;
+using System;
 
 namespace NavratHUB.Data.Storage
 {
@@ -32,7 +34,8 @@ namespace NavratHUB.Data.Storage
 
             float numeric;
             if(float.TryParse(data, out numeric)) 
-                this.IotClient.HandleData(sensor, data);
+                Task.Run(() => this.IotClient.HandleData(sensor, numeric));
+                // this.IotClient.HandleData(sensor, numeric).ContinueWith((t) => Console.WriteLine("Call finished"), null);
         }
     }
 }
