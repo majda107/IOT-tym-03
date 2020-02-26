@@ -26,17 +26,12 @@ namespace NavratHUB.Data.Connection
         // {
         //     this._httpClient = null;
         // }
-        public async Task<bool> CreateVariable(VariableViewModel variable) // WONT WORK BECAUSE NAG API :-) !!!
+        public async Task<bool> CreateVariable(VariableViewModel variable)
         {
-            // var dict = new Dictionary<string, string>();
-            // dict.Add("name", name);
+            var content = new StringContent(JsonConvert.SerializeObject(variable), System.Text.Encoding.UTF8, "application/json");
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            // var content = new FormUrlEncodedContent(dict);
-            // content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            // content.Headers.Add("X-Api-Key", KEY);
-            // content.Headers.Add("Accept", "application/json");
-
-            var content = new StringContent(JsonConvert.SerializeObject(variable));
+            var test = await content.ReadAsStringAsync();
 
             var result = await this._httpClient.PostAsync($"{ENDPOINT}/variable/{variable.Name}", content);
             return result.StatusCode == System.Net.HttpStatusCode.OK;
@@ -61,7 +56,6 @@ namespace NavratHUB.Data.Connection
             var content = new StringContent(JsonConvert.SerializeObject(data), System.Text.Encoding.UTF8, "application/json");
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var test = await content.ReadAsStringAsync();
 
             var response = await this._httpClient.PutAsync($"{ENDPOINT}/variable/{variable.Name}", content);
 
