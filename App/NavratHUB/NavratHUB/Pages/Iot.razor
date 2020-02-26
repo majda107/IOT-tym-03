@@ -6,34 +6,51 @@
 
 @inject IotClient iotClient
 
+@if(this.status.HasValue)
+{
+    <span>Last status: @this.status</span>
+}
+
 <EditForm OnValidSubmit="HandleNewVariable" Model="@this.variable">
     <InputText @bind-Value="this.variable.Name" />
     <button type="submit">Submit</button>
 </EditForm>
 
-<button @onclick="GetVariables">Get variables</button>
+<EditForm OnValidSubmit="SetVariable" Model="@this.variable">
+    <InputText @bind-Value="this.variable.Name" />
+    <InputNumber @bind-Value="this.variable.Value"/>
+    <button type="submit">Set variable!</button>
+</EditForm>
+
+<button @onclick="GetVariables">Get variables...</button>
     
 @if(this.variables != null)
 {
     <ul>
-    @foreach(var value in this.variables)
+    @foreach(var var in this.variables)
     {
-        <li>@value.Name</li>
+        <li>@(var.Name) : @(var.Value)</li>
     }
     </ul>
 }
 
 @code {
     private VariableViewModel variable = new VariableViewModel();
+    private bool? status = null;
     private IEnumerable<VariableViewModel> variables;
 
     public async Task HandleNewVariable()
     {
-        await this.iotClient.CreateVariable(this.variable);
+        this.status = await this.iotClient.CreateVariable(this.variable);
     }
 
     public async Task GetVariables()
     {
         this.variables = await this.iotClient.GetVariables();
+    }
+
+    public async Task SetVariable()
+    {
+        this.status = await this.iotClient.SetVariable(this.variable);
     }
 }

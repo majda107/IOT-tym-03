@@ -19,7 +19,7 @@ namespace NavratHUB.Data.Connection
 
             this._httpClient.DefaultRequestHeaders.Add("X-Api-Key", KEY);
             this._httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            this._httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            // this._httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
         }
 
         // public IotClient()
@@ -58,7 +58,11 @@ namespace NavratHUB.Data.Connection
 
             data.Value = variable.Value;
 
-            var content = new StringContent(JsonConvert.SerializeObject(data));
+            var content = new StringContent(JsonConvert.SerializeObject(data), System.Text.Encoding.UTF8, "application/json");
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var test = await content.ReadAsStringAsync();
+
             var response = await this._httpClient.PutAsync($"{ENDPOINT}/variable/{variable.Name}", content);
 
             return response.StatusCode == HttpStatusCode.OK;
