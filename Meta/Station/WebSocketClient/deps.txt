@@ -1,1 +1,1 @@
-https://github.com/hellerchr/esp8266-websocketclient
+https://github.com/morrissinger/ESP8266-Websocket
