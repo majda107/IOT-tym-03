@@ -61,6 +61,7 @@ namespace NavratHUB
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
+                endpoints.MapHub<RelayHub>("/relayhub");
                 endpoints.MapHub<StationHub>("/stationhub");
                 endpoints.MapFallbackToPage("/_Host");
             });

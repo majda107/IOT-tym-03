@@ -11,7 +11,7 @@ namespace SocketServer
         static void Main(string[] args)
         {
             // var server = new Server(IPAddress.Parse("192.168.137.118"), 5050, "http://127.0.0.1:5000/stationhub");
-            var server = new Server(IPAddress.Parse("192.168.137.118"), 5050, "http://192.168.137.118:5000/stationhub");
+            var server = new Server(IPAddress.Parse("127.0.0.1"), 5050, "http://127.0.0.1:5000/stationhub");
             server.Connect();
 
             Console.Write("Server running... type anything to send as test data, [exit] to stop the server...: ");
