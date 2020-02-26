@@ -51,6 +51,10 @@
 
     public async Task SetVariable()
     {
-        this.status = await this.iotClient.SetVariable(this.variable);
+        var temp = await this.iotClient.GetVariable(this.variable.Name);
+        if(temp == null) return;
+
+        temp.Value = this.variable.Value;
+        this.status = await this.iotClient.SetVariable(temp);
     }
 }

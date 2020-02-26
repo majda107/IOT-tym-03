@@ -48,12 +48,7 @@ namespace NavratHUB.Data.Connection
 
         public async Task<bool> SetVariable(VariableViewModel variable)
         {
-            var data = await this.GetVariable(variable.Name);
-            if(data == null) return false;
-
-            data.Value = variable.Value;
-
-            var content = new StringContent(JsonConvert.SerializeObject(data), System.Text.Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(variable), System.Text.Encoding.UTF8, "application/json");
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
 
@@ -67,6 +62,17 @@ namespace NavratHUB.Data.Connection
             var response = await this._httpClient.GetAsync($"{ENDPOINT}/variables");
             var data = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<IEnumerable<VariableViewModel>>(data);
+        }
+
+        public async Task<bool> HandleData(string name, float value)
+        {
+            var data = await this.GetVariable(name);
+            data.Value = value;
+
+            if(data == null) 
+                return await this.CreateVariable(new VariableViewModel() { Name = name, Value = value });
+            else
+                return await this.SetVariable(data);
         }
     }
 }

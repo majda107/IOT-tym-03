@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NavratHUB.Data.Storage.Station;
+using NavratHUB.Data.Connection;
 
 namespace NavratHUB.Data.Storage
 {
@@ -9,12 +10,15 @@ namespace NavratHUB.Data.Storage
         public event StationStorageEventHandler DataReceived;
         public Dictionary<string, List<string>> Data { get; private set; }
 
+        public IotClient IotClient { get; private set;}
         public StationStorage Station { get; private set; }
 
-        public Storage()
+        public Storage(IotClient client)
         {
             this.Data = new Dictionary<string, List<string>>();
             this.Station = new StationStorage();
+
+            this.IotClient = client;
         }
 
         public void Add(string sensor, string data)
@@ -25,6 +29,10 @@ namespace NavratHUB.Data.Storage
 
             this.Data[sensor].Add(data);
             this.DataReceived?.Invoke(this, new StorageEventArgs(sensor, data));
+
+            float numeric;
+            if(float.TryParse(data, out numeric)) 
+                this.IotClient.HandleData(sensor, data);
         }
     }
 }
