@@ -21,14 +21,14 @@ WiFiClient client;
 
 
 // WIFI SSID
-const char *ssid = "buzka";
+const char *ssid = "HELLDESK-NOVAJD";
 // WIFI PASSWORD
-const char *password = "jedominantni";
+const char *password = "!@#$%^&*()";
 
 char path[] = "/";
 
 // SERVER IP
-char host[] = "192.168.43.169";
+char host[] = "192.168.137.118";
 
 // ====
 // END CONFIG
@@ -136,11 +136,13 @@ void loop() {
     //webSocketClient.sendData("test lol: " + String(random(0, 100)));
     send_data();
     Serial.println("Data sent... sleeping for 10s");
-    ESP.deepSleep(10000000);
+    delay(10000);
+    //ESP.deepSleep(10000000);
   }
   else
   {
     Serial.println("Client not connected... retrying in 5s");
-    ESP.deepSleep(5000000);
+    //ESP.deepSleep(5000000);
+    delay(5000);
   }
 }
